@@ -14,8 +14,8 @@ namespace TelegramShell
             Opacity = 0;
             base.OnLoad(e);
         }
-        
-        private string token = "5053986676:AAFuWaAKpIApLGCaxV4EN8bgGbMBa-VW9U8";
+
+        private string _token;
         private TelegramBotClient _client;
         private Command _command;
         private ListOfCommands _listOfCommands;
@@ -28,10 +28,8 @@ namespace TelegramShell
             
             _env = new EnvFile( @"Enviroments\.env");
             _env.Load();
-            
-            MessageBox.Show(Environment.GetEnvironmentVariable("API_KEY"));
-            
-            _client = new TelegramBotClient(token);
+
+            _client = new TelegramBotClient(_token);
             _client.StartReceiving();
             _client.OnMessage += OnMessageHandler;
         }
