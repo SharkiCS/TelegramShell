@@ -15,7 +15,7 @@ namespace TelegramShell.Tests
         [Fact]
         public void GetCommandReturnNotValidCommandIfDoesntExist()
         {
-            Command command = new Command("/ashgjsah");
+            Command command = new Command("/testing");
             command.GetCommand().Should().Be(Commands.NotValidCommand);
         }
     }
