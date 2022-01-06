@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System;
+using System.Collections.Generic;
+using Xunit;
 using FluentAssertions;
 
 namespace TelegramShell.Tests
@@ -8,8 +10,8 @@ namespace TelegramShell.Tests
         [Fact]
         public void GetCommandReturnTheCommandEnumIfExists()
         {
-            Command command = new Command("/Show echo 1");
-            command.GetCommand().Should().Be(Commands.Show);
+            Command command = new Command("/Cmd echo 1");
+            command.GetCommand().Should().Be(Commands.Cmd);
         }
         
         [Fact]
@@ -17,6 +19,13 @@ namespace TelegramShell.Tests
         {
             Command command = new Command("/testing");
             command.GetCommand().Should().Be(Commands.NotValidCommand);
+        }
+        
+        [Fact]
+        public void GetParametersReturnsAnArrayWithOnlyTheParameters()
+        {
+            Command command = new Command("/Cmd echo 1");
+            command.GetParameters().Should().Equal( new List<String>() {"echo", "1"});
         }
     }
 }
