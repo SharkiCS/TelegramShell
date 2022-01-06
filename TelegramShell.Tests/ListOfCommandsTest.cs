@@ -9,9 +9,7 @@ namespace TelegramShell.Tests
         public void ShowReturnsAStringWithAllComands()
         {
             ListOfCommands commands = new ListOfCommands();
-            commands.Show().Should().Be(
-                "/Show\n/Cmd\n"
-                );
+            commands.Show().Should().Be("/Show\n/Cmd\n");
         }
     }
 }
