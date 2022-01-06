@@ -29,6 +29,8 @@ namespace TelegramShell
             _env = new EnvFile( @"Enviroments\.env");
             _env.Load();
 
+            _token = Environment.GetEnvironmentVariable("API_KEY");
+
             _client = new TelegramBotClient(_token);
             _client.StartReceiving();
             _client.OnMessage += OnMessageHandler;
