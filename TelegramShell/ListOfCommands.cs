@@ -3,7 +3,7 @@ using System.Text;
 
 namespace TelegramShell
 {
-    class ListOfCommands
+    public class ListOfCommands
     {
         public string Show()
         {
