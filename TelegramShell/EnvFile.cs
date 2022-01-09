@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace TelegramShell
 {
@@ -11,20 +13,13 @@ namespace TelegramShell
 
         public void Load()
         {
-
             if (!File.Exists(_path))
                 return;
 
             foreach (var line in File.ReadAllLines(_path))
             {
-                var parts = line.Split(
-                    '=',
-                    StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length != 2)
-                    continue;
-                
-                Environment.SetEnvironmentVariable(parts[0], parts[1]);
+                List<String> parts = line.Split('=').ToList();
+                Environment.SetEnvironmentVariable(parts.First(), parts.Last());
             }
         }
     }

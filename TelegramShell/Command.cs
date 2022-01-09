@@ -19,7 +19,7 @@ namespace TelegramShell
         public Commands GetCommand()
         {
             if (!_command.StartsWith('/') || 
-                !Enum.TryParse<Commands>(_command[1..], true, out Commands commands))
+                !Enum.TryParse<Commands>(_command[1..], false, out Commands commands))
                 return Commands.NotValidCommand;
 
             return (Commands)Enum.Parse(typeof(Commands), _command[1..]);

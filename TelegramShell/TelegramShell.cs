@@ -47,7 +47,6 @@ namespace TelegramShell
                 case Commands.Chat:
                     _api.Client.StopReceiving();
                     
-                    
                     Chat chat = new Chat(
                        mainApi: _api,
                        nickName: _command.GetParameters().Count > 0 ?
@@ -55,6 +54,10 @@ namespace TelegramShell
                            "Unknown"
                         );
                     Application.Run(chat);
+                    break;
+                case Commands.QuitChat:
+                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id,
+                        "There's no chat initializated.");
                     break;
                 
                 case Commands.NotValidCommand:

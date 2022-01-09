@@ -5,6 +5,8 @@
         Show,
         Cmd,
         Chat,
-        NotValidCommand
+        QuitChat,
+        NotValidCommand,
+        
     }
 }
