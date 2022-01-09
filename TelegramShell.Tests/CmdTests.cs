@@ -14,4 +14,4 @@ namespace TelegramShell.Tests
             cmd.Execute().Should().Be("1");
         }
     }
-}
+}   

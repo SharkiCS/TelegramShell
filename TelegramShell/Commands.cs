@@ -4,6 +4,7 @@
     {
         Show,
         Cmd,
+        Chat,
         NotValidCommand
     }
 }
