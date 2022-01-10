@@ -5,24 +5,24 @@ using FluentAssertions;
 
 namespace TelegramShell.Tests
 {
-    public class CommandTests
+    public class CommandTestsShould
     {
         [Fact]
-        public void GetCommandReturnTheCommandEnumIfExists()
+        public void ReturnTheCommandEnumIfExists()
         {
             Command command = new Command("/Cmd echo 1");
             command.GetCommand().Should().Be(Commands.Cmd);
         }
         
         [Fact]
-        public void GetCommandReturnNotValidCommandIfDoesntExist()
+        public void ReturnNotValidCommandIfDoesntExist()
         {
             Command command = new Command("/testing");
             command.GetCommand().Should().Be(Commands.NotValidCommand);
         }
         
         [Fact]
-        public void GetParametersReturnsAnArrayWithOnlyTheParameters()
+        public void ReturnsAnArrayWithOnlyTheParameters()
         {
             Command command = new Command("/Cmd echo 1");
             command.GetParameters().Should().Equal( new List<String>() {"echo", "1"});

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 using Telegram.Bot.Args;
 
@@ -45,7 +44,7 @@ namespace TelegramShell
 
         private void sendMessage_Click(object sender, EventArgs e)
         {
-            messageWindow.AppendText($"Victima: {messageBox.Text}\n");
+            messageWindow.AppendText($"Victim: {messageBox.Text}\n");
             _api.Client.SendTextMessageAsync(_chatId, messageBox.Text);
         }
 

@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TelegramShell
 {
@@ -8,26 +12,33 @@ namespace TelegramShell
         private readonly string _command;
         public CMD(List<String> command) =>
             _command = String.Join(' ', command);
-
-        public string Execute()
+        
+        public async Task<string> Execute()
         {
+            StringBuilder output = new StringBuilder();
+            Process terminal = Process.Start(new ProcessStartInfo("cmd.exe")
+            {
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+                Arguments = @"/c " + _command,
+                UseShellExecute = false,
+            });
+
+            terminal.OutputDataReceived += (s, e) => output.Append(e.Data);
+            terminal.Start();
+            terminal.BeginOutputReadLine();
+            
+            CancellationTokenSource timeoutSignal = new(TimeSpan.FromSeconds(5));
+            
             try
             {
-                System.Diagnostics.Process CMD = new System.Diagnostics.Process();
-                CMD.StartInfo.FileName = "cmd.exe";
-                CMD.StartInfo.Arguments = @"/c " + _command;
-                CMD.StartInfo.UseShellExecute = false;
-                CMD.StartInfo.CreateNoWindow = true;
-                CMD.StartInfo.RedirectStandardOutput = true;
-                CMD.Start();
-                
-                string output = CMD.StandardOutput.ReadToEnd();
-
-                return output.Length > 0 ? $"{output.Trim()}" : "Output can't be showed.";
-            }
-            catch
+                await terminal.WaitForExitAsync(timeoutSignal.Token);
+                return $"Command finished sucessfully.\n{output}";
+            } 
+            catch (OperationCanceledException)
             {
-                return "Cmd command isn't correct";
+                terminal.Kill();
+                return $"Command exited due to out of time.\n{output}";
             }
         }
     }

@@ -3,13 +3,13 @@ using FluentAssertions;
 
 namespace TelegramShell.Tests
 {
-    public class ListOfCommandsTest
+    public class ListOfCommandsTestShould
     {
         [Fact]
-        public void ShowReturnsAStringWithAllComands()
+        public void ReturnsAStringWithAllComands()
         {
             ListOfCommands commands = new ListOfCommands();
-            commands.Show().Should().Be("/Show\n/Cmd\n");
+            commands.Show().Should().Be("/Show\n/Cmd\n/Chat\n/QuitChat\n");
         }
     }
 }

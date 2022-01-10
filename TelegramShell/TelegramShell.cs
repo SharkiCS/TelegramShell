@@ -41,7 +41,7 @@ namespace TelegramShell
                     
                 case Commands.Cmd:
                     _cmd = new CMD(_command.GetParameters());
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _cmd.Execute());
+                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _cmd.Execute().Result);
                     break;
 
                 case Commands.Chat:
@@ -55,6 +55,7 @@ namespace TelegramShell
                         );
                     Application.Run(chat);
                     break;
+                
                 case Commands.QuitChat:
                     _api.Client.SendTextMessageAsync(e.Message.Chat.Id,
                         "There's no chat initializated.");

@@ -7,6 +7,5 @@
         Chat,
         QuitChat,
         NotValidCommand,
-        
     }
 }
