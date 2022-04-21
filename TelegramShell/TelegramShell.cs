@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Telegram.Bot.Args;
+using TelegramShell.Commands;
 
 namespace TelegramShell
 {
@@ -16,9 +18,11 @@ namespace TelegramShell
         }
 
         private TelegramAPI _api;
-        private Command _command;
-        private Show _show;
-        private CMD _cmd;
+        
+        private readonly List<ICommand> _commands = new(){
+            new Show(),
+            new Cmd()
+        };
         
         public TelegramShell()
         {
@@ -30,44 +34,47 @@ namespace TelegramShell
         
         private void OnMessageHandler(object sender, MessageEventArgs e)
         {
-            _command = new Command(e.Message.Text);
-            
-            switch (_command.GetCommand())
-            {
-                case Commands.Show:
-                    _show = new Show();
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _show.Execute());
-                    break;
-                    
-                case Commands.Cmd:
-                    _cmd = new CMD(_command.GetParameters());
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _cmd.Execute().Result);
-                    break;
-            
-                case Commands.Chat:
-                    _api.Client.StopReceiving();
-                    
-                    Chat chat = new Chat(
-                       mainApi: _api,
-                       nickName: _command.GetParameters().Count > 0 ?
-                           _command.GetParameters().First() :
-                           "Unknown"
-                        );
-                    Application.Run(chat);
-                    break;
-                
-                case Commands.QuitChat:
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id,
-                        "There's no chat initializated.");
-                    break;
-                
-                case Commands.NotValidCommand:
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, 
-                        "Not a valid command. Tap /Show to show the list of commands.");
-                    break;
-            }
+            string commandName = e.Message.Text;
+            long chatId = e.Message.Chat.Id;
+            Command command = new(commandName);
+
+            _commands.First(c => c.IsMatch(command.Name)).Execute(command.Arguments, _api, chatId);
+            // switch (_command.GetCommand())
+            // {
+            //     case Commands.Show:
+            //         _show = new Show();
+            //         _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _show.Execute());
+            //         break;
+            //         
+            //     case Commands.Cmd:
+            //         _cmd = new CMD(_command.GetParameters());
+            //         _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _cmd.Execute().Result);
+            //         break;
+            //
+            //     case Commands.Chat:
+            //         _api.Client.StopReceiving();
+            //         
+            //         Chat chat = new Chat(
+            //            mainApi: _api,
+            //            nickName: _command.GetParameters().Count > 0 ?
+            //                _command.GetParameters().First() :
+            //                "Unknown"
+            //             );
+            //         Application.Run(chat);
+            //         break;
+            //     
+            //     case Commands.QuitChat:
+            //         _api.Client.SendTextMessageAsync(e.Message.Chat.Id,
+            //             "There's no chat initializated.");
+            //         break;
+            //     
+            //     case Commands.NotValidCommand:
+            //         _api.Client.SendTextMessageAsync(e.Message.Chat.Id, 
+            //             "Not a valid command. Tap /Show to show the list of commands.");
+            //         break;
+            // }
         }
-        
+
         private void TelegramShell_Load(object sender, EventArgs e)
         {
 

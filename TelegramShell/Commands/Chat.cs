@@ -1,18 +1,27 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using TelegramShell.CommandsImplementation;
 
 namespace  TelegramShell.Commands
 {
-    public class Cmd : ICommand
+    public class Chat : ICommand
     {
         public bool IsMatch(string command) 
-            => nameof(Cmd) == command;
+            => nameof(Chat) == command;
 
         public void Execute(List<string> arguments, TelegramAPI api, long chatId)
         {
-            CmdImplementation cmdImplementation = new CmdImplementation();
-            string output = cmdImplementation.ExecuteAsync(arguments).Result;
-            api.Client.SendTextMessageAsync(chatId, output);
+            api.Client.StopReceiving();
+            
+            ChatImplementation chat = new ChatImplementation(
+               mainApi: api,
+               nickName: arguments.Count > 0 ?
+                   arguments.First() :
+                   "Unknown"
+                );
+            
+            Application.Run(chat);
         }
     }
 }

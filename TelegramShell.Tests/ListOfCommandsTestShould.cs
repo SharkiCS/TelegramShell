@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using FluentAssertions;
+using TelegramShell.CommandsImplementation;
 
 namespace TelegramShell.Tests
 {
@@ -8,7 +9,7 @@ namespace TelegramShell.Tests
         [Fact]
         public void ReturnsAStringWithAllComands()
         {
-            Show commands = new Show();
+            ShowImplementation commands = new ShowImplementation();
             commands.Execute().Should().Be("/Show\n/Cmd\n/Chat\n/QuitChat\n");
         }
     }

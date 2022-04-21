@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using Telegram.Bot.Args;
 
-namespace TelegramShell
+namespace TelegramShell.CommandsImplementation
 {
-    public partial class Chat : Form
+    public partial class ChatImplementation : Form
     {
         private readonly TelegramAPI _mainApi;
         private readonly string _nickName;
@@ -12,7 +12,7 @@ namespace TelegramShell
         private Command _command;
         private long _chatId;
 
-        public Chat(TelegramAPI mainApi, string nickName)
+        public ChatImplementation(TelegramAPI mainApi, string nickName)
         {
             _mainApi = mainApi;
             _nickName = nickName;
@@ -29,7 +29,7 @@ namespace TelegramShell
             _chatId = e.Message.Chat.Id;
             _command = new Command(e.Message.Text);
             
-            if(_command.GetCommand() == Commands.QuitChat)
+            if(_command.Name == "/QuitChat")
                 this.Close();
             
             if(!e.Message.Text.StartsWith('/'))

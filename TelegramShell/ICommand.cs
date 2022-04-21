@@ -1,8 +1,10 @@
-﻿namespace TelegramShell
+﻿using System.Collections.Generic;
+
+namespace TelegramShell
 {
     public interface ICommand
     {
-        string IsMatch();
-        string Execute();
+        bool IsMatch(string command);
+        void Execute(List<string> arguments, TelegramAPI api, long chatId);
     }
 }

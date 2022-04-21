@@ -1,7 +1,7 @@
 ﻿
-namespace TelegramShell
+namespace TelegramShell.CommandsImplementation
 {
-    partial class Chat
+    partial class ChatImplementation
     {
         /// <summary>
         /// Required designer variable.
@@ -68,7 +68,7 @@ namespace TelegramShell
             this.Controls.Add(this.messageWindow);
             this.Controls.Add(this.messageBox);
             this.Controls.Add(this.sendMessage);
-            this.Name = "Chat";
+            this.Name = "ChatImplementation";
             this.Text = "Chat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chat_FormClosing);
             this.Load += new System.EventHandler(this.Chat_Load);

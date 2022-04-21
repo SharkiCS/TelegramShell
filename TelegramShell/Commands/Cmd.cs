@@ -3,16 +3,16 @@ using TelegramShell.CommandsImplementation;
 
 namespace  TelegramShell.Commands
 {
-    public class Show : ICommand
+    public class Cmd : ICommand
     {
         public bool IsMatch(string command) 
-            => nameof(Show) == command;
+            => nameof(Cmd) == command;
 
         public void Execute(List<string> arguments, TelegramAPI api, long chatId)
         {
-            ShowImplementation showImplementation = new ShowImplementation();
-            string listOfCommands = showImplementation.PrintCommandList();
-            api.Client.SendTextMessageAsync(chatId, listOfCommands);
+            CmdImplementation cmdImplementation = new CmdImplementation();
+            string output = cmdImplementation.ExecuteAsync(arguments).Result;
+            api.Client.SendTextMessageAsync(chatId, output);
         }
     }
 }

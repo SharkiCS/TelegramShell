@@ -1,5 +1,6 @@
 using Xunit;
 using FluentAssertions;
+using TelegramShell.CommandsImplementation;
 
 namespace TelegramShell.Tests
 {
@@ -9,8 +10,8 @@ namespace TelegramShell.Tests
         public void ReturnsCommandFinishedSuccessfullyPlusOutput()
         {
             Command command = new Command("/CMD echo prueba");
-            CMD cmd = new CMD(command.GetParameters());
-            cmd.Execute().Result.Should().Be("Command finished sucessfully.\nprueba");
+            CmdImplementation cmdImplementation = new CmdImplementation(command.GetParameters());
+            cmdImplementation.Execute().Result.Should().Be("Command finished sucessfully.\nprueba");
         }
         
         // [Fact]

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TelegramShell
+namespace TelegramShell.CommandsImplementation
 {
-    public class CMD
+    public class CmdImplementation
     {
-        private async Task<string> ExecuteAsync(List<string> arguments)
+        public async Task<string> ExecuteAsync(List<string> arguments)
         {
             StringBuilder output = new StringBuilder();
             Process terminal = Process.Start(new ProcessStartInfo("cmd.exe")
@@ -37,9 +37,5 @@ namespace TelegramShell
                 return $"Command exited due to out of time.\n{output}";
             }
         }
-        public string Execute(List<string> arguments) 
-            => ExecuteAsync(arguments).Result;
-        public bool IsMatch(string command) 
-            => nameof(ShowImplementation) == command;
     }
 }
