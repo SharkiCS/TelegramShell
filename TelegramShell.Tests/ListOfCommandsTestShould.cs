@@ -8,8 +8,8 @@ namespace TelegramShell.Tests
         [Fact]
         public void ReturnsAStringWithAllComands()
         {
-            ListOfCommands commands = new ListOfCommands();
-            commands.Show().Should().Be("/Show\n/Cmd\n/Chat\n/QuitChat\n");
+            Show commands = new Show();
+            commands.Execute().Should().Be("/Show\n/Cmd\n/Chat\n/QuitChat\n");
         }
     }
 }

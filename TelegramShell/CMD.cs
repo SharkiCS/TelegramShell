@@ -11,7 +11,7 @@ namespace TelegramShell
     {
         private readonly string _command;
         public CMD(List<String> command) =>
-            _command = String.Join(' ', command);
+            _command = string.Join(' ', command);
         
         public async Task<string> Execute()
         {

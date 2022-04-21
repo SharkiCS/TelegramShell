@@ -27,5 +27,12 @@ namespace TelegramShell.Tests
             Command command = new Command("/Cmd echo 1");
             command.GetParameters().Should().Equal( new List<String>() {"echo", "1"});
         }
+
+        [Fact]
+        public void ReturnTheCommandName()
+        {
+            Show show = new();
+            show.IsMatch().Should().Be("Show");
+        }
     }
 }

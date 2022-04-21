@@ -3,9 +3,9 @@ using System.Text;
 
 namespace TelegramShell
 {
-    public class ListOfCommands
+    public class Show : ICommand
     {
-        public string Show()
+        public string Execute()
         {
             StringBuilder listOfCommands = new StringBuilder();
 
@@ -19,5 +19,7 @@ namespace TelegramShell
 
             return listOfCommands.ToString();
         }
+
+        public string IsMatch() => nameof(Show);
     }
 }

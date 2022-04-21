@@ -17,7 +17,7 @@ namespace TelegramShell
 
         private TelegramAPI _api;
         private Command _command;
-        private ListOfCommands _listOfCommands;
+        private Show _show;
         private CMD _cmd;
         
         public TelegramShell()
@@ -31,19 +31,19 @@ namespace TelegramShell
         private void OnMessageHandler(object sender, MessageEventArgs e)
         {
             _command = new Command(e.Message.Text);
-
+            
             switch (_command.GetCommand())
             {
                 case Commands.Show:
-                    _listOfCommands = new ListOfCommands();
-                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _listOfCommands.Show());
+                    _show = new Show();
+                    _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _show.Execute());
                     break;
                     
                 case Commands.Cmd:
                     _cmd = new CMD(_command.GetParameters());
                     _api.Client.SendTextMessageAsync(e.Message.Chat.Id, _cmd.Execute().Result);
                     break;
-
+            
                 case Commands.Chat:
                     _api.Client.StopReceiving();
                     

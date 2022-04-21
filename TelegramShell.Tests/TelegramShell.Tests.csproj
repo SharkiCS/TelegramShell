@@ -25,4 +25,10 @@
       <ProjectReference Include="..\TelegramShell\TelegramShell.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="FakeEnviroments\.env">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

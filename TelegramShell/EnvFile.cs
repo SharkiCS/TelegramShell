@@ -18,7 +18,7 @@ namespace TelegramShell
 
             foreach (var line in File.ReadAllLines(_path))
             {
-                List<String> parts = line.Split('=').ToList();
+                List<string> parts = line.Split('=').ToList();
                 Environment.SetEnvironmentVariable(parts.First(), parts.Last());
             }
         }
