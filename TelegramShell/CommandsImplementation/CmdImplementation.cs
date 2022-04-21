@@ -9,37 +9,37 @@ namespace TelegramShell
 {
     public class CMD
     {
-        private readonly string _command;
-        public CMD(List<String> command) =>
-            _command = string.Join(' ', command);
-        
-        public async Task<string> Execute()
+        private async Task<string> ExecuteAsync(List<string> arguments)
         {
             StringBuilder output = new StringBuilder();
             Process terminal = Process.Start(new ProcessStartInfo("cmd.exe")
             {
                 RedirectStandardOutput = true,
                 CreateNoWindow = true,
-                Arguments = @"/c " + _command,
+                Arguments = @"/c " + string.Join(' ', arguments),
                 UseShellExecute = false,
             });
 
             terminal.OutputDataReceived += (s, e) => output.Append(e.Data);
             terminal.Start();
             terminal.BeginOutputReadLine();
-            
+
             CancellationTokenSource timeoutSignal = new(TimeSpan.FromSeconds(5));
-            
+
             try
             {
                 await terminal.WaitForExitAsync(timeoutSignal.Token);
                 return $"Command finished sucessfully.\n{output}";
-            } 
+            }
             catch (OperationCanceledException)
             {
                 terminal.Kill();
                 return $"Command exited due to out of time.\n{output}";
             }
         }
+        public string Execute(List<string> arguments) 
+            => ExecuteAsync(arguments).Result;
+        public bool IsMatch(string command) 
+            => nameof(ShowImplementation) == command;
     }
 }
